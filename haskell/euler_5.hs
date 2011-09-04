@@ -6,21 +6,26 @@
 -- What is the smallest positive number that is evenly divisible by all of the numbers 
 -- from 1 to 20?
 --
--- Time Complexity: N.  Explanation: For each prime factor extracted from any element in
---                  input list, iterate over each element and divide it by the prime 
---                  factor if possible.  Since an integer has very few prime factors, 
---                  very few iterations over N would occur in practice.
+-- This solution is based on the algorithm described here: 
+-- http://en.wikipedia.org/wiki/Least_common_multiple#A_method_using_a_table
+--
+-- Time Complexity:  N.  Explanation: For each prime factor present in any element in the 
+--                   input list, iterate over all elements and divide each by the prime 
+--                   factor if possible.  Since a relatively small number of prime 
+--                   factorisations will actually occur, a very small number (k) of 
+--                   iterations over N would occur.
+--
 -- Space Complexity: N.  Explanation: We only need to keep the current list of N integers,
---                   after extracting the current prime factor from each term if possible.
---                   Also small amount of constant overhead for accumulators etc.
+--                   performing successive prime factorisations in-place.  Small constant 
+--                   overhead for accumulators etc.
 
 import Data.List
 
 solution = Main.lcm [1..20]
 
--- Calculates Lowest Common Multiple of ints, by extracting prime factors from the list
--- starting from the lowest primes and working up, while building a running product of 
--- the prime factors.
+-- Calculates the Lowest Common Multiple of a list of Integers, by extracting prime factors 
+-- from the list starting from the lowest primes and working up, while building a running 
+-- product of the prime factors.
 lcm :: [Integer] -> Integer
 lcm vals = lcm' vals 1
 	where
